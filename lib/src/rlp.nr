@@ -31,7 +31,7 @@ impl RLP_Header
 
 /// RLP list in the form of a look-up table containing the offsets, lengths
 /// and types of the fields together with the total number of fields.
-struct RLP_List<NUM_FIELDS>
+struct RLP_List<let NUM_FIELDS: u64>
 {
     /// Offsets of the fields
     offset: [u64; NUM_FIELDS],
@@ -43,7 +43,7 @@ struct RLP_List<NUM_FIELDS>
     num_fields: u64
 }
 
-impl<NUM_FIELDS> RLP_List<NUM_FIELDS>
+impl<let NUM_FIELDS: u64> RLP_List<NUM_FIELDS>
 {
     /// RLP table constructor taking offsets, lengths, data types and number of
     /// fields as arguments
@@ -59,7 +59,7 @@ impl<NUM_FIELDS> RLP_List<NUM_FIELDS>
 /// # Arguments
 /// * `arr` - RLP-encoded list
 /// * `lenlen` - Number of bytes containing the length of the payload
-pub fn data_len<N>(arr: [u8; N], lenlen: u64) -> u64 {
+pub fn data_len<let N: u64>(arr: [u8; N], lenlen: u64) -> u64 {
     assert(lenlen <= MAX_LEN_IN_BYTES); // Byte length of length of payload must not exceed MAX_LEN_IN_BYTES
     let mut out = 0;
 
@@ -79,7 +79,7 @@ pub fn data_len<N>(arr: [u8; N], lenlen: u64) -> u64 {
 ///
 /// # Arguments
 /// * `arr` - RLP-encoded byte array
-pub fn decode_len<N>(arr: [u8; N]) -> RLP_Header {
+pub fn decode_len<let N: u64>(arr: [u8; N]) -> RLP_Header {
     let prefix = arr[0];
 
     // Prefix range indicators
@@ -133,7 +133,7 @@ pub fn decode_len<N>(arr: [u8; N]) -> RLP_Header {
 ///
 /// # Arguments
 /// * `input` - RLP-encoded string
-pub fn decode0<N>(input: [u8; N]) -> (u64, u64) {
+pub fn decode0<let N: u64>(input: [u8; N]) -> (u64, u64) {
     let mut RLP_Header {offset, length, data_type} = decode_len(input); // Read RLP header of input
 
     let total_len = length + offset; // Data length including RLP header
@@ -153,7 +153,7 @@ pub fn decode0<N>(input: [u8; N]) -> (u64, u64) {
 /// # Quirks
 /// * For string elements, the offset points to the payload, whereas the offset
 ///   of a list element points to the RLP header of that element.
-pub fn decode1<N, NUM_FIELDS>(input: [u8; N]) -> RLP_List<NUM_FIELDS> {
+pub fn decode1<let N: u64, let NUM_FIELDS: u64>(input: [u8; N]) -> RLP_List<NUM_FIELDS> {
     let mut num_fields: u64 = 0; // Number of fields
     let mut dec_off = [0; NUM_FIELDS]; // Decoded offsets
     let mut dec_len = [0; NUM_FIELDS]; // Decoded lengths
@@ -196,7 +196,7 @@ pub fn decode1<N, NUM_FIELDS>(input: [u8; N]) -> RLP_List<NUM_FIELDS> {
 ///
 /// # Arguments
 /// * `input` - RLP-encoded list
-pub fn decode1_small_lis<N, NUM_FIELDS>(input: [u8; N]) -> RLP_List<NUM_FIELDS> {
+pub fn decode1_small_lis<let N: u64, let NUM_FIELDS: u64>(input: [u8; N]) -> RLP_List<NUM_FIELDS> {
     let mut num_fields: u64 = 0; // Number of fields
     let mut dec_off = [0; NUM_FIELDS]; // Decoded offsets
     let mut dec_len = [0; NUM_FIELDS]; // Decoded lengths
@@ -323,7 +323,7 @@ fn rlp_length_check() {
 }
 
 // Function for selecting M elements of an array starting at index n
-pub fn take_dot_drop<T, N, M>(arr: [T; N], n: u64) -> [T; M] // = drop n . take M
+pub fn take_dot_drop<T, let N: u64, let M: u64>(arr: [T; N], n: u64) -> [T; M] // = drop n . take M
 {
     let mut out = [dep::std::unsafe::zeroed(); M];
 

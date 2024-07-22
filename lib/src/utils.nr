@@ -4,7 +4,7 @@
 /// * `dest` - Destination array
 /// * `src` - Source array
 /// * `offset` - Offset in source array 
-pub(crate) fn memcpy<N, M>(dest: &mut [u8; N], src: [u8; M], offset: u64)
+pub(crate) fn memcpy<let N: u64, let M: u64>(dest: &mut [u8; N], src: [u8; M], offset: u64)
 {
     for i in 0..N
     {
@@ -20,7 +20,7 @@ pub(crate) fn memcpy<N, M>(dest: &mut [u8; N], src: [u8; M], offset: u64)
 /// * `array` - Array to be verified against
 /// * `len` - Number of elements to be verified
 /// * `offset` - Offset in `array`
-pub(crate) fn assert_subarray<N, M>(subarray: [u8; N], array: [u8; M], len: u64, offset: u64)
+pub(crate) fn assert_subarray<let N: u64, let M: u64>(subarray: [u8; N], array: [u8; M], len: u64, offset: u64)
 {
     for i in 0..N
     {
@@ -47,7 +47,7 @@ pub(crate) fn byte_to_nibbles(b: u8) -> (u8, u8)
 ///
 /// # Arguments
 /// * `in_value` - Byte array representing a number in big-endian form.
-pub(crate) fn byte_value<N>(in_value: [u8; N]) -> ([u8; N], u64)
+pub(crate) fn byte_value<let N: u64>(in_value: [u8; N]) -> ([u8; N], u64)
 {
     let mut value_length = 0;
 
@@ -72,7 +72,7 @@ pub(crate) fn byte_value<N>(in_value: [u8; N]) -> ([u8; N], u64)
 ///
 /// # Quirks
 /// The empty slots are set to 0.
-pub(crate) fn left_byte_shift<N>(input: [u8; N], n: u64) -> [u8; N]
+pub(crate) fn left_byte_shift<let N: u64>(input: [u8; N], n: u64) -> [u8; N]
 {
     let mut out = [0; N];
 
