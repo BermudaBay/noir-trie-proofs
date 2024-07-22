@@ -12,7 +12,7 @@ use dep::std::hash::keccak256;
 /// * `path` - RLP-encoded proof path
 /// * `depth` - Depth of proof path
 /// * `cur_depth` - Current depth in the proof path
-pub(crate) fn verify_internal_node<PROOF_LEN>(extracted_hash: &mut [u8; KEY_LENGTH], key_ptr: &mut u64, key_nibbles: [u8; NIBBLE_LENGTH], path: [u8; PROOF_LEN], depth: u64, cur_depth: u64)
+pub(crate) fn verify_internal_node<let PROOF_LEN: u64>(extracted_hash: &mut [u8; KEY_LENGTH], key_ptr: &mut u64, key_nibbles: [u8; NIBBLE_LENGTH], path: [u8; PROOF_LEN], depth: u64, cur_depth: u64)
 {
     let in_range = (cur_depth as u8) < (depth - 1) as u8; // Range indicator
 
@@ -35,7 +35,7 @@ pub(crate) fn verify_internal_node<PROOF_LEN>(extracted_hash: &mut [u8; KEY_LENG
 /// # Arguments
 /// * `node` - RLP-encoded trie node
 /// * `hash` - 32-byte hash value
-pub(crate) fn verify_node_hash<N>(node: [u8; N], hash: [u8; KEY_LENGTH])
+pub(crate) fn verify_node_hash<let N: u64>(node: [u8; N], hash: [u8; KEY_LENGTH])
                            -> bool
 {
     // Extract actual length of node
@@ -57,7 +57,7 @@ pub(crate) fn verify_node_hash<N>(node: [u8; N], hash: [u8; KEY_LENGTH])
 ///
 /// # Arguments
 /// * `key` - Array of bytes representing a key
-pub fn key_as_nibbles<KEY_LEN, NIB_LEN>(key: [u8; KEY_LEN]) -> [u8; NIB_LEN]
+pub fn key_as_nibbles<let KEY_LEN: u64, let NIB_LEN: u64>(key: [u8; KEY_LEN]) -> [u8; NIB_LEN]
 {
     assert(NIB_LEN == 2*KEY_LEN);
     
@@ -80,7 +80,7 @@ pub fn key_as_nibbles<KEY_LEN, NIB_LEN>(key: [u8; KEY_LEN]) -> [u8; NIB_LEN]
 /// # Arguments
 /// * `input`: The first field of a leaf/extension node as a (right-padded) byte array
 /// * `length`: The actual length of the data in `input`
-pub(crate) fn compact_decode<MAX_ENC_LEN, NIB_LEN>(input: [u8; MAX_ENC_LEN], length: u64) -> ([u8; NIB_LEN], u64)
+pub(crate) fn compact_decode<let MAX_ENC_LEN: u64, let NIB_LEN: u64>(input: [u8; MAX_ENC_LEN], length: u64) -> ([u8; NIB_LEN], u64)
 {
 
     assert((2 as u32)*(MAX_ENC_LEN as u32) <= ((NIB_LEN + 2) as u32)); // MAX_ENC_LEN should be NIB_LEN/2 or NIB_LEN/2 + 1. TODO
@@ -126,7 +126,7 @@ pub(crate) fn compact_decode<MAX_ENC_LEN, NIB_LEN>(input: [u8; MAX_ENC_LEN], len
 /// * `key` - Array containing the nibbles to be resolved
 /// * `key_ptr` - Pointer to the nibbles in `key` to be resolved
 /// * `node` - RLP-encoded byte array of branch or extension node
-pub fn resolve_nibble32<N>(
+pub fn resolve_nibble32<let N: u64>(
     key: [u8; NIBBLE_LENGTH],
     mut key_ptr: u64,
     node: [u8; N]) ->
@@ -179,7 +179,7 @@ pub fn resolve_nibble32<N>(
 /// * `key` - Array containing the nibbles to be resolved
 /// * `key_ptr` - Pointer to the nibbles in `key` to be resolved
 // TODO: Generalise to accommodate for variable key lengths.
-pub(crate) fn resolve17<N, NUM_FIELDS>(
+pub(crate) fn resolve17<let N: u64, let NUM_FIELDS: u64>(
     node: [u8; N],
     rlp_list: rlp::RLP_List<NUM_FIELDS>,
     key: [u8; NIBBLE_LENGTH],
@@ -233,7 +233,7 @@ pub(crate) fn resolve17<N, NUM_FIELDS>(
 /// * `rlp_list` - RLP list look-up table for `node`
 /// * `key` - Array containing the nibbles to be resolved
 /// * `key_ptr` - Pointer to the nibbles in `key` to be resolved
-pub(crate) fn resolve2<N, NUM_FIELDS, MAX_VALUE_LEN>(
+pub(crate) fn resolve2<let N: u64, let NUM_FIELDS: u64, let MAX_VALUE_LEN: u64>(
     node: [u8; N],
     rlp_list: rlp::RLP_List<NUM_FIELDS>,
     key: [u8; NIBBLE_LENGTH],

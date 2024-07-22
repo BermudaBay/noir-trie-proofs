@@ -10,7 +10,7 @@ use crate::rlp;
 /// Type alias for storage proofs. Assumes value is left-padded with zeros.
 type StateProof<PROOF_LEN> = TrieProof<20, PROOF_LEN, MAX_ACCOUNT_STATE_LENGTH>;
 
-impl<PROOF_LEN, MAX_VALUE_LEN> TrieProof<20, PROOF_LEN, MAX_VALUE_LEN>
+impl<let PROOF_LEN: u64, let MAX_VALUE_LEN: u64> TrieProof<20, PROOF_LEN, MAX_VALUE_LEN>
 {
     /// Ethereum state proof verifier. Returns true if all constraints are satisfied.
     ///
@@ -41,7 +41,7 @@ impl<PROOF_LEN, MAX_VALUE_LEN> TrieProof<20, PROOF_LEN, MAX_VALUE_LEN>
             verify_internal_node(&mut extracted_hash, &mut key_ptr, key_nibbles, path, depth, i);
         }
 
-        self.verify_state_leaf_node(extracted_hash, key.len(), key_ptr, key_nibbles);
+        self.verify_state_leaf_node(extracted_hash, key.len() as u64, key_ptr, key_nibbles);
         
         true
     }
