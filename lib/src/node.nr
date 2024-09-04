@@ -204,6 +204,12 @@ pub(crate) fn resolve17<let N: u64, let NUM_FIELDS: u64>(
     let cur_nibble = key[key_ptr];
     let resolved_key_length = rlp_list.length[cur_nibble as u64];
 
+    println(f"node {node}");
+    println(f"key_ptr {key_ptr}");
+    println(f"key {key}");
+    println(f"cur_nibble {cur_nibble}");
+    println(f"resolved_key_length {resolved_key_length}");
+
     assert(resolved_key_length == KEY_LENGTH);
     assert((key_ptr as u32) < (NIBBLE_LENGTH as u32)); // Fixed-length key => Node cannot be terminal.
     
