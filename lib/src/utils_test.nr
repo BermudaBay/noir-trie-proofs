@@ -21,7 +21,7 @@ fn test_arrays_equal()
     assert_subarray(subarray, array, 2, 1);
 }
 
-#[test(should_fail_with_message = "Arrays do not match at specified offset")]
+#[test(should_fail_with = "Arrays do not match at specified offset")]
 fn test_arrays_equal_fail()
 {
     let subarray = [1, 2, 3];
