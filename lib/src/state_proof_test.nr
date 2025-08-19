@@ -1,5 +1,5 @@
 use crate::{
-    trie_proof::TrieProof, 
+    trie_proof::TrieProof,
     const::NIBBLE_LENGTH,
 };
 
@@ -8,7 +8,7 @@ use crate::{
 fn cryptopunk_state() // State proof of cryptopunk NFT contract at block 14194126
 {
     // Equivalent to `depth_8_state_proof` test (cf. README).
-    // Fetch data using provided binary or running the equivalent of 
+    // Fetch data using provided binary or running the equivalent of
     // curl -X POST $RPC_URL -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0xd895ce", false],"id":1}'
     // for the state root and
     // curl -X POST $RPC_URL -d '{"jsonrpc":"2.0","method":"eth_getProof","params":["0xb47e3cd837dDF8e4c57f05d70ab865de6e193bbb",[],"0xd895ce"],"id":1}'
