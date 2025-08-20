@@ -16,5 +16,12 @@ jobs:
         with:
           toolchain: 1.0.0-beta.9
 
-      - name: Run nargo test
+      - name: Run unit tests
         run: nargo test
+
+      - name: Run integration tests
+        run: |
+          nargo execute --package depth_8_state_proof
+          nargo execute --package depth_8_storage_proof
+          nargo execute --package one_level
+          nargo execute --package rlp_decode
