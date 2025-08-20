@@ -8,7 +8,7 @@ use keccak256::keccak256;
 use crate::rlp;
 
 /// Type alias for storage proofs. Assumes value is left-padded with zeros.
-type StorageProof<let PROOF_LEN: u32> = TrieProof<32, PROOF_LEN, MAX_STORAGE_VALUE_LENGTH>;
+pub type StorageProof<let PROOF_LEN: u32> = TrieProof<32, PROOF_LEN, MAX_STORAGE_VALUE_LENGTH>;
 
 impl<let PROOF_LEN: u32, let MAX_VALUE_LEN: u32> TrieProof<32, PROOF_LEN, MAX_VALUE_LEN>
 {
